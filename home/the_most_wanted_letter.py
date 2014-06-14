@@ -10,6 +10,7 @@
 # For example -- "one" contains "o", "n", "e" only once for each,
 # thus we choose "e".
 
+# TODO try one loop (instead of two loops
 def checkio(text):
     count = {}
     for c in text:
