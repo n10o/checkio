@@ -3,18 +3,18 @@ def flatten(dictionary):
     result = {}
     while stack:
         path, current = stack.pop()
-        print "path:", path, " current:",current
         for k, v in current.items():
+            comppath = "/".join((path + (k,)))
             if isinstance(v, dict):
                 stack.append((path + (k,), v))
-                print "stack:", stack
-                ### MY ADD POINT ###
+                # Memo: dictが空の場合にelseに入って欲しいが、デフォルトだとdictと認識されて
+                # else節に最後まで入らず、うまくいかない。
+                # そのため、dictが空の場合にresultを別途返せば良い
                 if not v:
-                        result[k] = ""
-                ####################
+                        result[comppath] = ""
             else:
-                result["/".join((path + (k,)))] = v
-    print "Result:", result
+                # Memo: tuple + tuple = fusion
+                result[comppath] = v
     return result
 
 
