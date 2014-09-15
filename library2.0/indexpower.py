@@ -2,14 +2,10 @@ def index_power(array, n):
     """
         Find Nth power of the element with index N.
     """
-    sum = 1
-    for i in range(n):
-      try:
-        sum = sum * array[n]
-      except:
-        return -1
-    
-    return sum
+    try:
+      return array[n] ** n
+    except:
+      return -1
 
 if __name__ == '__main__':
     #These "asserts" using only for self-checking and not necessary for auto-testing
