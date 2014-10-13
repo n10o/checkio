@@ -2,7 +2,7 @@ def find_message(text):
   msg = ""
   for txt in text:
     if txt.isupper():
-      msg += txt[0]
+      msg += txt
   return msg
 
 if __name__ == '__main__':
