@@ -3,18 +3,19 @@ def count_inversion(sequence):
   pointer = 1
   count = 0
   while True:
-    opponent = basepointer + pointer
-    if len(sequence) <= opponent:
+    if len(sequence) <= basepointer:
       break
-    base = sequence[basepointer]
-    if base > sequence[opponent]:
-      count += 1
-      pointer += 1
-    else:
-      basepointer += pointer
-      pointer = 1
-  print count
+    opponentpointer = basepointer + pointer
 
+    if len(sequence) <= opponentpointer:
+      basepointer += 1
+      pointer = 1
+      continue
+
+    base = sequence[basepointer]
+    if base > sequence[opponentpointer]:
+      count += 1
+    pointer += 1
   return count
 
 if __name__ == '__main__':
