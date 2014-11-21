@@ -12,43 +12,42 @@
 # that is; words that you count cannot have two consecutive vowels or consonants.
 # The words consisting of a single letter are not striped -- do not count those.
 # Casing is not significant for this mission.
+import re
 VOWELS = "AEIOUY"
 CONSONANTS = "BCDFGHJKLMNPQRSTVWXZ"
 NUMBERS = "1234567890"
-PUNCTUATION = " ,."
+PUNCTUATION = "[ ,.]"
 
 def checkio(text):
     count = 0
-    wordcount = 0
-    isvowel = None
-    striped = True
-    for c in text:
-        c = c.upper()
-        wordcount += 1
-        if striped == True:
+    previousVowels = None
+    isPassed = True
+
+    for word in re.split(PUNCTUATION, text.upper()):
+        if len(word) <= 1:
+            continue
+        for c in word:
+            # NOT stripe zone
+            if c in NUMBERS or c in PUNCTUATION:
+                isPassed = False
+                break;
+            if c in VOWELS and previousVowels == True:
+                isPassed = False
+                break;
+            if c in CONSONANTS and previousVowels == False:
+                isPassed = False
+                break;
+
+            # Stripe continue zone
             if c in VOWELS:
-                if isvowel == True:
-                    striped = False
-                isvowel = True
-                continue
-            elif c in CONSONANTS:
-                if isvowel == False:
-                    striped = False
-                isvowel = False
-                continue
-            elif c in NUMBERS:
-                striped = False
-                continue
+                previousVowels = True
+            if c in CONSONANTS:
+                previousVowels = False
 
-        if c in PUNCTUATION:
-            if striped == True and wordcount > 2:
-                count += 1
-            isvowel = None
-            striped = True
-            wordcount = 0
-
-    if striped == True and wordcount > 2:
-        count += 1
+        if isPassed:
+            count += 1
+        previousVowels = None
+        isPassed = True
 
     return count
 
