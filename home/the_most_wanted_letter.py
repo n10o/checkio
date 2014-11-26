@@ -12,35 +12,36 @@
 
 # TODO try one loop (instead of two loops
 def checkio(text):
-    count = {}
-    for c in text:
-        if c.isalpha():
-            c = c.lower()
-            if count.has_key(c):
-                num = count[c]
-                num += 1
-                count[c] = num
-            else:
-                count[c] = 1
-    maxkeys = []
-    maxnum = ""
-    for key in count.keys():
-        num = count[key]
-        if not maxkeys or maxnum < num:
-            maxkeys = [key]
-            maxnum = num
-        elif maxnum == num:
-            maxkeys.append(key)
-    maxkeys.sort()
-    return maxkeys[0]
+  letters = {}
+  # create char count dictionary
+  # e.g. letters = {"a": 1, "d": 3, "c": 2}
+  for c in text.lower():
+    if not c.isalpha():
+      continue
+    if letters.has_key(c):
+      letters[c] = letters[c] + 1
+    else:
+      letters[c] = 1
+
+  # Find the most frequent letter
+  maxkey = ""
+  for c in letters.keys():
+    if not maxkey:
+      maxkey = c
+      continue
+    if letters[maxkey] == letters[c] and maxkey > c:
+      maxkey = c
+    elif letters[maxkey] < letters[c]:
+      maxkey = c
+  return maxkey
 
 if __name__ == '__main__':
-    assert checkio("Hello World!") == "l", "Hello test"
-    assert checkio("How do you do?") == "o", "O is most wanted"
-    assert checkio("One") == "e", "All letter only once."
-    assert checkio("Oops!") == "o", "Don't forget about lower case."
-    assert checkio("AAaooo!!!!") == "a", "Only letters."
-    assert checkio("abe") == "a", "The First."
-    print("Start the long test")
-    assert checkio("a" * 9000 + "b" * 1000) == "a", "Long."
-    print("The local tests are done.")
+  assert checkio("Hello World!") == "l", "Hello test"
+  assert checkio("How do you do?") == "o", "O is most wanted"
+  assert checkio("One") == "e", "All letter only once."
+  assert checkio("Oops!") == "o", "Don't forget about lower case."
+  assert checkio("AAaooo!!!!") == "a", "Only letters."
+  assert checkio("abe") == "a", "The First."
+  print("Start the long test")
+  assert checkio("a" * 9000 + "b" * 1000) == "a", "Long."
+  print("The local tests are done.")
