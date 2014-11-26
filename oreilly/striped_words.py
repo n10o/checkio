@@ -20,35 +20,27 @@ PUNCTUATION = "[ ,.]"
 
 def checkio(text):
     count = 0
-    previousVowels = None
-    isPassed = True
-
     for word in re.split(PUNCTUATION, text.upper()):
         if len(word) <= 1:
             continue
+        previousVowels = None
+        isPassed = True
         for c in word:
-            # NOT stripe zone
-            if c in NUMBERS or c in PUNCTUATION:
-                isPassed = False
-                break;
             if c in VOWELS and previousVowels == True:
                 isPassed = False
                 break;
             if c in CONSONANTS and previousVowels == False:
                 isPassed = False
                 break;
-
-            # Stripe continue zone
             if c in VOWELS:
                 previousVowels = True
-            if c in CONSONANTS:
+            elif c in CONSONANTS:
                 previousVowels = False
-
+            else:
+                isPassed = False
+                break;
         if isPassed:
             count += 1
-        previousVowels = None
-        isPassed = True
-
     return count
 
 #These "asserts" using only for self-checking and not necessary for auto-testing

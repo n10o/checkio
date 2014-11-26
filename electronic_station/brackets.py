@@ -11,19 +11,13 @@
 def checkio(expression):
     blackets = {"(":")", "{":"}", "[":"]"}
     stack = []
-    for char in expression:
-        for blacket in blackets.keys():
-            if not stack and blackets[blacket] == char:
+    for c in expression:
+        if c in blackets.keys():
+            stack.append(blackets[c])
+        if c in blackets.values():
+            if stack == [] or c != stack[-1]:
                 return False
-            if blacket == char:
-                stack.append(blacket)
-                break
-            if stack and blackets[blacket] == char:
-                if char != blackets[stack[-1]]:
-                    return False
-                else:
-                    stack.pop()
-                    break
+            stack.pop()
     if stack:
         return False
     return True
